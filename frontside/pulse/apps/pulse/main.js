@@ -44,12 +44,12 @@ function main() { Pulse.main(); }
 // this is probably not the best way to add google maps, 
 // but it works.. a sproutcore plugin would handy
 Pulse.initializeGMap = function initializeGMap() {
-	
+
   var initialLatLng = new google.maps.LatLng(49.271296584780345, -123.11454373016358); // view vancouver on map
   var myOptions = {
-	  zoom: 14,
-  	center: initialLatLng,
-  	mapTypeId: google.maps.MapTypeId.ROADMAP
+    zoom: 14,
+    center: initialLatLng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
   var mapDiv = document.getElementById("map_canvas");
@@ -89,14 +89,14 @@ Pulse.setMarkers = function() {
   var buildings = Pulse.buildingsController.get('content');
   
   buildings.forEach(function(building) {
-	
-	  var marker = new google.maps.Marker({
-  	  position: new google.maps.LatLng( building.get('latitude'), building.get('longitude') ),
-  	  map: Pulse.map,
-  	  title: building.get('name')
-  	});
-	
-  	var contentString = '<div id="content" style="color: black">'+
+  
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng( building.get('latitude'), building.get('longitude') ),
+      map: Pulse.map,
+      title: building.get('name')
+    });
+  
+    var contentString = '<div id="content" style="color: black">'+
       '<h1 id="firstHeading" class="firstHeading">'+building.get('name')+'</h1>'+
       '<p>Used '+building.get('energy') +' energy '+
       'over the last day.</p>'+
@@ -118,10 +118,10 @@ Pulse.setMarkers = function() {
     }
     Pulse.GMapSelectors[building.get('guid')] = selectMarker;
 
-    // Marker's click action	
-	  google.maps.event.addListener(marker, 'click', selectMarker);
-	  
-	  //console.log('building : ' + building.get('name') );
+    // Marker's click action  
+    google.maps.event.addListener(marker, 'click', selectMarker);
+    
+    //console.log('building : ' + building.get('name') );
   
   });
 
