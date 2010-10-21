@@ -1,0 +1,14 @@
+# ===========================================================================
+# Project:   Pulse
+# Copyright: ©2010 My Company, Inc.
+# ===========================================================================
+
+# Add initial buildfile information here
+#config :all, :required => :sproutcore
+#config :all, :required => [:sproutcore, :flot]
+config :flot, :required => :sproutcore
+config :pulse, :required => [:sproutcore, 'flot']
+
+# Proxy for PHP connector
+#proxy '/data', :to => '127.0.0.1:80'
+proxy '/data', :to => 'pulse.sluglab.com:80'

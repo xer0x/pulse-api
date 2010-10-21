@@ -1,0 +1,11 @@
+=============================================================================
+Project:   Pulse
+Copyright: ©2010Drew Miller
+=============================================================================
+
+Pulse API Google Map Mashup
+
+This UI uses SproutCore for layout and as an HttpRequest wrapper.
+
+The Google Maps integration is stashed in apps/pulse/main.js
+
