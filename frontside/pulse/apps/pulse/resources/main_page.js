@@ -19,65 +19,65 @@ Pulse.mainPage = SC.Page.design({
       anchorLocation: SC.ANCHOR_TOP,
 
       labelView: SC.LabelView.design({
-	    layout: { centerY: 0, height: 24, left: 8, width: 200 },
-	    controlSize: SC.LARGE_CONTROL_SIZE,
-	    fontWeight: SC.BOLD_WEIGHT,
-	    value: 'Pulse Buildings'
+      layout: { centerY: 0, height: 24, left: 8, width: 200 },
+      controlSize: SC.LARGE_CONTROL_SIZE,
+      fontWeight: SC.BOLD_WEIGHT,
+      value: 'Pulse Buildings'
       })
     }),
 
     middleView: SC.SplitView.design({
-	    layout: { top: 36, right: 0, bottom:32, left: 0 }, //bottom:32 leaves room for a toolbar below
-  	  autoresizeBehavior: SC.RESIZE_BOTTOM_RIGHT,
-  	  // defaultThickness: 0.8,
+      layout: { top: 36, right: 0, bottom:32, left: 0 }, //bottom:32 leaves room for a toolbar below
+      autoresizeBehavior: SC.RESIZE_BOTTOM_RIGHT,
+      // defaultThickness: 0.8,
       defaultThickness: 120,
       topLeftMinThickness: 100,
-  	  topLeftMaxThickness: 200,
+      topLeftMaxThickness: 200,
 
-  	  topLeftView: SC.ScrollView.design({
-  		  hasHorizontalScroller: NO,
-		
-  		  // left side's view contents
+      topLeftView: SC.ScrollView.design({
+        hasHorizontalScroller: NO,
+    
+        // left side's view contents
         contentView: SC.ListView.design({
-  	      // data binding to controller
-  	      contentBinding: 'Pulse.buildingsController.arrangedObjects',
-  	      selectionBinding: 'Pulse.buildingsController.selection',
-  	      contentValueKey: "name",
-  	      rowHeight: 21,
-  	      canEditContent: NO,
-  	      canDeleteContent: NO,
+          // data binding to controller
+          contentBinding: 'Pulse.buildingsController.arrangedObjects',
+          selectionBinding: 'Pulse.buildingsController.selection',
+          contentValueKey: "name",
+          rowHeight: 21,
+          canEditContent: NO,
+          canDeleteContent: NO,
             actOnSelect: YES, // single click, instead of double click
-  	      target: "Pulse.buildingsController",
-  	      action: "selectBuilding"
-  	    })
-  	  }),
-  	
-  	  dividerView: SC.SplitDividerView.design({
-		    layout: {}
-	    }),
-		  
-  	  bottomRightView: SC.SplitView.design({
-  		  // right side's view contents
-    		autoresizeBehavior: SC.RESIZE_BOTTOM_RIGHT,
+          target: "Pulse.buildingsController",
+          action: "selectBuilding"
+        })
+      }),
+    
+      dividerView: SC.SplitDividerView.design({
+        layout: {}
+      }),
+      
+      bottomRightView: SC.SplitView.design({
+        // right side's view contents
+        autoresizeBehavior: SC.RESIZE_BOTTOM_RIGHT,
         // defaultThickness: 0.999,
         defaultThickness: 0.8,      // .8 is good if we put the graph at the bottom
-    	  //  defaultThickness: 120,
-		
-  		  layoutDirection: SC.LAYOUT_VERTICAL,
-		
-    		topLeftView: SC.StaticContentView.design({
-  			  // top map view
-  			  content: "<div id='map_canvas'></div>"
-			
-  		  }),
-  		  bottomRightView: Flot.GraphView.design({
-  		    // bottom stats view
+        //  defaultThickness: 120,
+    
+        layoutDirection: SC.LAYOUT_VERTICAL,
+    
+        topLeftView: SC.StaticContentView.design({
+          // top map view
+          content: "<div id='map_canvas'></div>"
+      
+        }),
+        bottomRightView: Flot.GraphView.design({
+          // bottom stats view
 
-  			  //  a chart/graph of energy readings from API here
-  			  
-  			  // TODO move the data into a fixture,
-  			  // make that work here
-  			  // replace the fixture up with Data-Store call to http://pulse.sluglab.com/data/points/ID
+          //  a chart/graph of energy readings from API here
+          
+          // TODO move the data into a fixture,
+          // make that work here
+          // replace the fixture up with Data-Store call to http://pulse.sluglab.com/data/points/ID
         
           layout: { left: 0, top: 0, height: 200, right: 0 } ,
           data: [
@@ -98,8 +98,8 @@ Pulse.mainPage = SC.Page.design({
           })
         }) // end inner-bottomRightView
         
-	    }) // end bottomRightView
-	  
+      }) // end bottomRightView
+    
     }) // end MiddleView
   })
 

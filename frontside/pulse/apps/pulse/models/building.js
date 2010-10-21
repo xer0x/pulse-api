@@ -14,12 +14,12 @@
 Pulse.Building = SC.Record.extend(
 /** @scope Pulse.Building.prototype */ {
 
-	name: SC.Record.attr(String),
-	latitude: SC.Record.attr(String),
-	longitude: SC.Record.attr(String),
-	//timezone: SC.Record.attr(String)
-	//marker: Object
-	point: SC.Record.attr(String),
-	energy: SC.Record.attr(String)
-	
+  name: SC.Record.attr(String),
+  latitude: SC.Record.attr(String),
+  longitude: SC.Record.attr(String),
+  //timezone: SC.Record.attr(String)
+  //marker: Object
+  point: SC.Record.attr(String),
+  energy: SC.Record.attr(String)
+  
 }) ;

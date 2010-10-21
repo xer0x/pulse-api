@@ -11,7 +11,7 @@
   @extends SC.ArrayController
 */
 Pulse.buildingsController = SC.ArrayController.create(
-	//SC.CollectionViewDelegate,
+  //SC.CollectionViewDelegate,
 /** @scope Pulse.buildingsController.prototype */ {
 
   selectBuilding: function() {
