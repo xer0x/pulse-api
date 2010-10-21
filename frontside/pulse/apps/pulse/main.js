@@ -37,7 +37,7 @@ Pulse.main = function main() {
   // it would be nice to have this guarantee'd to happen after SproutCore loads
   Pulse.addGMapScriptCode(); 
 
-} ;
+};
 
 function main() { Pulse.main(); }
 
@@ -61,6 +61,13 @@ Pulse.initializeGMap = function initializeGMap() {
   
   Pulse.GMapLoaded = true;
   Pulse.invokeLater(Pulse.setMarkers);
+
+  google.maps.event.addListener(Pulse.map, 'click', function(event) {
+    infoWindow.close();
+    //console.log('saw click on map');
+    //console.log(SC.inspect(event));
+  });
+
 };
 
 /**
@@ -71,48 +78,48 @@ Pulse.initializeGMap = function initializeGMap() {
  * 2. called via main.js Pulse.initializeGmap()
  */
 Pulse.setMarkers = function() {
-  
+
   // skip this if google map is not yet loaded
   if (!Pulse.GMapLoaded) {
     // timing is difficult.
     return;
   }
-  
+
   // popup overlay window for map
   var infoWindow = new google.maps.InfoWindow ({
-      content: 'Building', 
-      size: new google.maps.Size(150,150),
-      disableAutoPan: false
-      });
+    content: 'Building', 
+    size: new google.maps.Size(150,150),
+    disableAutoPan: false
+  });
 
   // building data via sproutcore controller -> ajax/fitting
   var buildings = Pulse.buildingsController.get('content');
-  
+
   buildings.forEach(function(building) {
-  
+
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng( building.get('latitude'), building.get('longitude') ),
       map: Pulse.map,
       title: building.get('name')
     });
-  
+
     var contentString = '<div id="content" style="color: black">'+
       '<h1 id="firstHeading" class="firstHeading">'+building.get('name')+'</h1>'+
       '<p>Used '+building.get('energy') +' energy '+
       'over the last day.</p>'+
       '</div>';
-    
+
     var selectMarker = function(event) {
       console.log('selectMarker called for a building');
 
       infoWindow.setContent(contentString);
       infoWindow.open(Pulse.map, marker);
-      
+
       // focus in on the selected spot
       Pulse.map.panTo( new google.maps.LatLng(building.get('latitude'), building.get('longitude')) );
-      
+
     };
-    
+
     if (!Pulse.GMapSelectors) {
       Pulse.GMapSelectors = {};
     }
@@ -120,19 +127,12 @@ Pulse.setMarkers = function() {
 
     // Marker's click action  
     google.maps.event.addListener(marker, 'click', selectMarker);
-    
-    //console.log('building : ' + building.get('name') );
-  
-  });
 
-  google.maps.event.addListener(Pulse.map, 'click', function(event) {
-    infoWindow.close();
-    //console.log('saw click on map');
-    //console.log(SC.inspect(event));
-  });
+    //console.log('building : ' + building.get('name') );
+
+  }); // end buildings.forEach
 
 };
-
 
 Pulse.addGMapScriptCode = function addGMapScriptCode() {
   var script = document.createElement("script");
