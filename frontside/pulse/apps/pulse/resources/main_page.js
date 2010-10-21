@@ -46,7 +46,7 @@ Pulse.mainPage = SC.Page.design({
           rowHeight: 21,
           canEditContent: NO,
           canDeleteContent: NO,
-            actOnSelect: YES, // single click, instead of double click
+          actOnSelect: YES, // single click, instead of double click
           target: "Pulse.buildingsController",
           action: "selectBuilding"
         })
