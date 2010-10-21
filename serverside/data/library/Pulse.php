@@ -20,6 +20,12 @@ class Pulse
     'month' => 3600,      // 60 min
     'building' => 3600,   // 60 min
     'history' => 10800);  // 180 min
+
+  private $timePeriod = array(
+    'hour' => 3600,        // 1 hour
+    'day' => 86400,        // 24 hours = 24 x 3600 seconds
+    'week' => 604800,      // 1 week..
+    'month' => 18144000);  // 30 days..
   
   private $locations = array(
     array('latitude'=>"49.26090751931607", 'longitude'=>"-123.11394870281221"),
@@ -81,18 +87,51 @@ class Pulse
    * get energy usage data for a point
    *
    * interval = hour, day, week, month
+   *            defaults to week
    * start = unix time, or ISO time format
+   *         defaults to the most recent interval
    */
-  public function getData($pointId,$interval,$start="") {
+  public function getData($pointId,$interval='week',$start="") {
+
+    if (!$pointId) {
+      return array('code'=>500, 'body'=> 'Missing point id. eg: /data/points/1234 <- 1234 is id');
+    }
     
-    $url = Pulse::API_BASEURL . "points/$pointId/data.xml";
-    $url .= "?interval=$interval&start=$start";
-    // TODO is it okay if start is blank? or does it need to be omitted?
+    $url = Pulse::API_BASEURL . "points/$pointId/data.json";
+    $url .= "?interval=$interval";
+    $url .= "&start=".($start ? $start : time()-$this->timePeriod[$interval]);
     
     $r = $this->query->get($url, HttpRequest::METH_GET, $timer[$interval]);
+
+    if ($r['code'] != 200) {
+      // show the messy error from API
+      echo $r['body'];
+    } else {
+      // decode json into array object, it'll be json_encoded() by index.php next
+      $r['body'] = json_decode($r['body']);
+
+      // timestamps in javascript are the number of milliseconds since epoc
+      // timestamps in php/unix are the number of seconds since epoc
+      // so we multiply everything by 1000
+      $r['body'] = $this->multiplyTimestamps($r['body']);
+    }
     
-    return $http_request;    
+    return $r;
     
+  }
+
+  /**
+   * convert to unix timestamps to javascript timestamps for FLOT
+   * see http://flot.googlecode.com/svn/trunk/API.txt
+   *
+   * TODO: push this clientside?
+   */
+  private function multiplyTimestamps($dataset) {
+    foreach ($dataset->data as $idx => $entry) {
+      //echo "idx: $idx - ".$entry[0].",".$entry[1]."\n";
+      $dataset->data[$idx][0] *= 1000;
+    }
+    return $dataset;
   }
   
   /**
